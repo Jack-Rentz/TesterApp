@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF3E7CB51E1AFE2B0091F3DC /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3E7CB41E1AFE2B0091F3DC /* LocalAuthentication.framework */; };
 		DF49A02E1E1AABA3006BCE37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF49A02D1E1AABA3006BCE37 /* AppDelegate.swift */; };
 		DF49A0301E1AABA3006BCE37 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF49A02F1E1AABA3006BCE37 /* ViewController.swift */; };
 		DF49A0331E1AABA3006BCE37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF49A0311E1AABA3006BCE37 /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DF3E7CB41E1AFE2B0091F3DC /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		DF49A02A1E1AABA3006BCE37 /* TesterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TesterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF49A02D1E1AABA3006BCE37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF49A02F1E1AABA3006BCE37 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -29,17 +31,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF3E7CB51E1AFE2B0091F3DC /* LocalAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF3E7CB31E1AFE2B0091F3DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DF3E7CB41E1AFE2B0091F3DC /* LocalAuthentication.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DF49A0211E1AABA3006BCE37 = {
 			isa = PBXGroup;
 			children = (
 				DF49A02C1E1AABA3006BCE37 /* TesterApp */,
 				DF49A02B1E1AABA3006BCE37 /* Products */,
+				DF3E7CB31E1AFE2B0091F3DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +108,7 @@
 				TargetAttributes = {
 					DF49A0291E1AABA3006BCE37 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = LCPXNFALAU;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -258,6 +271,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LCPXNFALAU;
 				INFOPLIST_FILE = TesterApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BoxerProperty.TesterApp;
@@ -270,6 +284,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = LCPXNFALAU;
 				INFOPLIST_FILE = TesterApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = BoxerProperty.TesterApp;
@@ -297,6 +312,7 @@
 				DF49A03E1E1AABA3006BCE37 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
