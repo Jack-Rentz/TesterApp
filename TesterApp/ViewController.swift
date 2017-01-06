@@ -17,12 +17,35 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var labelOutlet: UILabel!
+    
     @IBOutlet weak var loginButtonOutlet: UIButton!
     
     @IBAction func loginButton(_ sender: Any) {
         loginButtonOutlet.titleLabel?.text = "Loading"
         loginButtonOutlet.isEnabled = false
         activityIndicator.startAnimating()
+        if usernameField.text == "username" {
+            if passwordField.text == "password" {
+                loginButtonOutlet.isEnabled = true
+                activityIndicator.stopAnimating()
+                passwordField.text = ""
+                usernameField.text = ""
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc: UIViewController = storyboard.instantiateViewController(withIdentifier: "SuccessNavigationController")
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                loginButtonOutlet.isEnabled = true
+                activityIndicator.stopAnimating()
+                passwordField.text = ""
+                showAlertWithTitle(title: "Incorrect username or password", message: "please re-enter credentials")
+            }
+        } else {
+            loginButtonOutlet.isEnabled = true
+            activityIndicator.stopAnimating()
+            passwordField.text = ""
+            showAlertWithTitle(title: "Incorrect username or password", message: "please re-enter credentials")
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -50,9 +73,11 @@ class ViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     if success {
-                        //run success code
+                        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                        let vc: UIViewController = storyboard.instantiateViewController(withIdentifier: "SuccessNavigationController")
+                        self.present(vc, animated: true, completion: nil)
                     } else {
-                        self.showAlertWithTitle(title: "Error", message: "TouchID encountered a problem")
+                        print("TouchID cancelled")
                     }
                 }
                 
