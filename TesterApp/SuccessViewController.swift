@@ -11,12 +11,18 @@ import UIKit
 class SuccessViewController: UIViewController {
 
     var isMenuShowing : Bool = false
+    var startLocation : CGPoint?
+    var lastLocation : CGPoint?
+    let alphaForDimming : CGFloat = 0.7
+    let maxAnimationDuration : CGFloat = 0.25
     
     @IBOutlet weak var menuLeadingConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var subViewOutlet: UIView!
     
     @IBOutlet weak var tableViewOutlet: UITableView!
+    
+    @IBOutlet weak var tableViewWidthOutlet: NSLayoutConstraint!
     
     @IBAction func goBackButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -32,7 +38,7 @@ class SuccessViewController: UIViewController {
         view.addGestureRecognizer(panGesture)
         
         self.view.bringSubview(toFront: tableViewOutlet)
-        menuLeadingConstraint.constant = -250
+        menuLeadingConstraint.constant = -tableViewWidthOutlet.constant
     }
     
     func executeAfterTap(tap: UITapGestureRecognizer) {
@@ -42,35 +48,52 @@ class SuccessViewController: UIViewController {
         }
     }
     
-    var startLocation : CGPoint?
-    
     func executeForPanning(gesture: UIPanGestureRecognizer) {
         if gesture.state == UIGestureRecognizerState.began {
             startLocation = gesture.location(in: self.subViewOutlet)
+            lastLocation = gesture.location(in: self.subViewOutlet)
         } else if gesture.state == UIGestureRecognizerState.ended {
-            let currentLocation = gesture.location(in: self.subViewOutlet)
-            let distanceSwiped = startLocation!.x - currentLocation.x
-            if distanceSwiped > 20 {
+            if menuLeadingConstraint.constant > -tableViewWidthOutlet.constant / 2 {
+                self.showMenu()
+                isMenuShowing = true
+            }
+            if menuLeadingConstraint.constant < -tableViewWidthOutlet.constant / 2 {
                 self.hideMenu()
                 isMenuShowing = false
             }
         } else if gesture.state == UIGestureRecognizerState.changed {
-            let currentLocation = gesture.location(in: self.subViewOutlet)
-            let distanceSwiped = startLocation!.x - currentLocation.x
             
-            if distanceSwiped > 0 {
-                menuLeadingConstraint.constant = menuLeadingConstraint.constant - distanceSwiped
-                subViewOutlet.alpha = subViewOutlet.alpha + CGFloat(Double(distanceSwiped) / 250.0)
+            let currentLocation = gesture.location(in: self.subViewOutlet)
+            
+            if isMenuShowing {
+                moveTableView(moveDistance: 0 + (currentLocation.x - startLocation!.x), currentLocation: currentLocation)
             } else {
-                menuLeadingConstraint.constant = menuLeadingConstraint.constant - distanceSwiped
-                subViewOutlet.alpha = subViewOutlet.alpha - CGFloat(Double(distanceSwiped) / 250.0)
+                moveTableView(moveDistance: -tableViewWidthOutlet.constant + (currentLocation.x - startLocation!.x), currentLocation: currentLocation)
             }
+            
+            lastLocation = currentLocation
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func moveTableView(moveDistance: CGFloat, currentLocation: CGPoint) {
+        let gradientForChangingAlpha = tableViewWidthOutlet.constant / (1 - alphaForDimming)
+        if currentLocation.x > lastLocation!.x && menuLeadingConstraint.constant < 0 {
+            if startLocation!.x < 35 || menuLeadingConstraint.constant > -tableViewWidthOutlet.constant {
+                if moveDistance <= 0 {
+                    menuLeadingConstraint.constant = moveDistance
+                    subViewOutlet.alpha = (-moveDistance / gradientForChangingAlpha) + alphaForDimming
+                }
+            } else {
+                return
+            }
+        } else if currentLocation.x < lastLocation!.x && menuLeadingConstraint.constant > -tableViewWidthOutlet.constant {
+            if moveDistance < 0 {
+                menuLeadingConstraint.constant = moveDistance
+                subViewOutlet.alpha = (-moveDistance / gradientForChangingAlpha) + alphaForDimming
+            } else {
+                return
+            }
+        }
     }
     
     @IBAction func openMenuButton(_ sender: Any) {
@@ -84,20 +107,30 @@ class SuccessViewController: UIViewController {
     }
     
     func hideMenu() {
-        menuLeadingConstraint.constant = -250
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.view.layoutIfNeeded()
-            self.subViewOutlet.alpha = 1
-        })
+        prepareToAnimateView(constant: -tableViewWidthOutlet.constant, compareConstant: 0, alpha: 1)
     }
     
     func showMenu() {
-        menuLeadingConstraint.constant = 0
-        
-        UIView.animate(withDuration: 0.3, animations: {
+        prepareToAnimateView(constant: 0, compareConstant: -tableViewWidthOutlet.constant, alpha: alphaForDimming)
+    }
+    
+    func prepareToAnimateView(constant: CGFloat, compareConstant: CGFloat, alpha: CGFloat) {
+        let gradientForAnimationDuration = tableViewWidthOutlet.constant / maxAnimationDuration
+        var duration: TimeInterval
+        if isMenuShowing {
+            duration = TimeInterval((tableViewWidthOutlet.constant + menuLeadingConstraint.constant + 100) / gradientForAnimationDuration)
+            animateView(duration: duration, alpha: alpha, positionToMoveViewTo: constant)
+        } else {
+            duration = TimeInterval(-menuLeadingConstraint.constant / gradientForAnimationDuration)
+            animateView(duration: duration, alpha: alpha, positionToMoveViewTo: constant)
+        }
+    }
+    
+    func animateView(duration: TimeInterval, alpha: CGFloat, positionToMoveViewTo: CGFloat) {
+        menuLeadingConstraint.constant = positionToMoveViewTo
+        UIView.animate(withDuration: duration, animations: {
             self.view.layoutIfNeeded()
-            self.subViewOutlet.alpha = 0.5
+            self.subViewOutlet.alpha = alpha
         })
     }
 

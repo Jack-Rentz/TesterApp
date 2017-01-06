@@ -70,11 +70,11 @@
 			children = (
 				DF49A02D1E1AABA3006BCE37 /* AppDelegate.swift */,
 				DF49A02F1E1AABA3006BCE37 /* ViewController.swift */,
+				DF3E7CD91E1D92400091F3DC /* SuccessViewController.swift */,
 				DF49A0311E1AABA3006BCE37 /* Main.storyboard */,
 				DF49A0341E1AABA3006BCE37 /* Assets.xcassets */,
 				DF49A0361E1AABA3006BCE37 /* LaunchScreen.storyboard */,
 				DF49A0391E1AABA3006BCE37 /* Info.plist */,
-				DF3E7CD91E1D92400091F3DC /* SuccessViewController.swift */,
 			);
 			path = TesterApp;
 			sourceTree = "<group>";

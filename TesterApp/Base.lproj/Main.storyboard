@@ -231,6 +231,7 @@
                         <outlet property="menuLeadingConstraint" destination="uxk-NO-HdI" id="67S-Y7-W3I"/>
                         <outlet property="subViewOutlet" destination="RSp-2H-7zg" id="zwx-Aq-78H"/>
                         <outlet property="tableViewOutlet" destination="a2n-Qo-Jhk" id="Bkg-zN-XGx"/>
+                        <outlet property="tableViewWidthOutlet" destination="bBv-VY-yrF" id="Jru-FX-F4I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yEO-QZ-LBv" userLabel="First Responder" sceneMemberID="firstResponder"/>
